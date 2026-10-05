@@ -47,3 +47,46 @@
 .nav-search:visited {
     color: #ffffff;
 }
+/* ===== REMOVE BLUE/PURPLE LINKS & UNDERLINES ===== */
+
+a,
+a:visited,
+a:hover,
+a:active {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Navbar */
+.navbar a,
+.navbar a:visited,
+.navbar a:hover,
+.navbar a:active {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Book cards */
+.card a,
+.card a:visited,
+.card a:hover,
+.card a:active {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Book titles/authors inside cards */
+.card h3,
+.card .author {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Keep normal page links white too */
+main a,
+main a:visited,
+main a:hover,
+main a:active {
+    color: #ffffff;
+    text-decoration: none;
+}
