@@ -17,6 +17,31 @@
     color: #ffffff;
     opacity: 1;
 }
+/* ===== REAL BOOK COVERS ===== */
+
+.cover {
+    position: relative;
+    overflow: hidden;
+}
+
+.cover img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.cover::after {
+    z-index: 2;
+}
+
+.cover .cover-text {
+    z-index: 3;
+    position: relative;
+    text-shadow: 0 2px 5px rgba(0,0,0,.7);
+}
 
 .nav-search,
 .nav-search:visited {
