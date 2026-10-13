@@ -1,1 +1,515 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Book Details | Book Haven</title><link rel="stylesheet" href="styles.css"></head><body><header class="nav"><a class="brand" href="index.html">📖 Book Haven</a><nav><a href="index.html">Home</a><a class="active" href="books.html">Books</a><a href="categories.html">Categories</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><a href="books.html" class="search">⌕</a></header><main class="page" id="details"></main><footer>📖 Book Haven <span>© 2026</span></footer><script src="app.js"></script></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Details | Book Haven</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #07111d;
+      color: white;
+      padding: 18px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
+
+    nav a {
+      color: #d4dce8;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #8ee0a0;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: 35px auto;
+      padding: 0 22px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #64748b;
+      text-decoration: none;
+    }
+
+    .book-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 55px;
+      align-items: start;
+    }
+
+    .cover {
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 28px #0002;
+    }
+
+    .category {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 44px);
+      line-height: 1.2;
+      margin: 12px 0 5px;
+    }
+
+    .author {
+      color: #64748b;
+      margin-bottom: 14px;
+    }
+
+    .rating {
+      color: #c18a19;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      color: #465267;
+      margin-bottom: 22px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .primary {
+      background: #07111d;
+      color: white;
+    }
+
+    .primary:hover {
+      background: #18334d;
+    }
+
+    .secondary {
+      background: white;
+      color: #07111d;
+      border: 1px solid #d7dee8;
+    }
+
+    .secondary:hover {
+      background: #edf2f7;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .detail {
+      padding: 16px;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #e5eaf0;
+    }
+
+    .detail span {
+      display: block;
+      font-size: 12px;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+
+    .detail strong {
+      display: block;
+      margin-top: 5px;
+    }
+
+    .extra {
+      margin-top: 30px;
+      padding: 22px;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e5eaf0;
+    }
+
+    .extra h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .reader {
+      display: none;
+      margin-top: 25px;
+      padding: 24px;
+      background: white;
+      border: 1px solid #dbe3ec;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px #00008;
+    }
+
+    .reader.active {
+      display: block;
+    }
+
+    .reader-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .reader-text {
+      white-space: pre-line;
+      color: #465267;
+      line-height: 1.9;
+    }
+
+    footer {
+      margin-top: 60px;
+      background: #07111d;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 25px;
+    }
+
+    @media (max-width: 700px) {
+      .book-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .cover {
+        max-width: 230px;
+      }
+
+      .details {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">📚 Book Haven</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#books">Books</a>
+      <a href="index.html#categories">Categories</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <a class="back" href="index.html#books">← Back to Books</a>
+
+    <section class="book-layout">
+      <div>
+        <img id="bookCover" class="cover" src="" alt="Book cover">
+      </div>
+
+      <div>
+        <div class="category" id="bookCategory"></div>
+        <h1 id="bookTitle">Loading book...</h1>
+        <p class="author">By <span id="bookAuthor"></span></p>
+
+        <div class="rating">
+          ★★★★★ <span id="bookRating"></span>
+        </div>
+
+        <p class="description" id="bookDescription"></p>
+
+        <div class="buttons">
+          <button class="primary" id="readMoreBtn">Read More</button>
+          <button class="secondary" id="wishlistBtn">♡ Wishlist</button>
+        </div>
+
+        <div class="details">
+          <div class="detail">
+            <span>Author</span>
+            <strong id="detailAuthor"></strong>
+          </div>
+
+          <div class="detail">
+            <span>Published</span>
+            <strong id="bookYear"></strong>
+          </div>
+
+          <div class="detail">
+            <span>Pages</span>
+            <strong id="bookPages"></strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="extra">
+      <h2>About This Book</h2>
+      <p id="bookAbout"></p>
+    </section>
+
+    <section class="reader" id="reader">
+      <div class="reader-head">
+        <h2 id="readerTitle">Reading Preview</h2>
+        <button class="secondary" id="closeReaderBtn">Close ✕</button>
+      </div>
+
+      <p class="reader-text" id="readerText"></p>
+      <p style="margin-top:18px;color:#64748b;font-size:13px">
+        This is a short reading preview, not the complete copyrighted book.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Book Haven. Discover your next favourite book.</p>
+  </footer>
+
+  <script>
+    const books = {
+      "atomic-habits": {
+        title: "Atomic Habits",
+        author: "James Clear",
+        category: "Self Help",
+        year: "2018",
+        pages: "320",
+        rating: "(4.8) · Reader favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg",
+        description: "A practical guide to building better habits, breaking bad ones, and making small changes that create remarkable results.",
+        about: "Atomic Habits explores how small, consistent improvements can lead to meaningful long-term change. It discusses habit formation, the influence of your environment, and practical ways to make helpful routines easier to maintain.",
+        preview: "Welcome to your reading preview!\n\nAtomic Habits focuses on the idea that small actions, repeated consistently, can add up to significant changes over time.\n\nRather than relying only on motivation, consider how your everyday environment and routines influence your choices.\n\nTry choosing one small, manageable habit that you can practise consistently."
+      },
+
+      "the-midnight-library": {
+        title: "The Midnight Library",
+        author: "Matt Haig",
+        category: "Fiction",
+        year: "2020",
+        pages: "304",
+        rating: "(4.5) · Reader favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780525559474-L.jpg",
+        description: "A thought-provoking novel about choices, possibilities, regret, and the many lives a person might imagine living.",
+        about: "Nora Seed encounters a mysterious library where different books represent different possibilities for her life. The novel explores choices, relationships, and the meaning people find in living.",
+        preview: "Welcome to your reading preview!\n\nImagine a library filled with books that represent different possibilities. Each book invites its reader to think about the choices that shape a life.\n\nWhat makes one path meaningful, and how can we learn to appreciate the life we have?"
+      },
+
+      "sapiens": {
+        title: "Sapiens",
+        author: "Yuval Noah Harari",
+        category: "History",
+        year: "2011",
+        pages: "498",
+        rating: "(4.6) · Reader favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780062316097-L.jpg",
+        description: "A broad exploration of human history, from early humans to the societies and systems of today.",
+        about: "Sapiens surveys major developments in human history, including cultural change, agriculture, money, and the growth of societies. It presents a wide-ranging interpretation of how human communities developed.",
+        preview: "Welcome to your reading preview!\n\nHuman history can be explored through the stories, shared beliefs, and systems that allow large groups of people to cooperate.\n\nLooking at the past helps us ask how present-day institutions and everyday practices developed."
+      },
+
+      "dune": {
+        title: "Dune",
+        author: "Frank Herbert",
+        category: "Science Fiction",
+        year: "1965",
+        pages: "688",
+        rating: "(4.7) · Reader favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780441172719-L.jpg",
+        description: "An epic science-fiction story of politics, power, ecology, and survival on a desert planet.",
+        about: "Dune follows Paul Atreides as his family becomes involved in a struggle over the desert planet Arrakis and its valuable spice. The story combines political conflict, ecology, and questions of leadership.",
+        preview: "Welcome to your reading preview!\n\nArrakis is a desert world where water is precious and survival depends on understanding the environment.\n\nIts resources shape the ambitions of powerful groups, making the planet central to a much larger political struggle."
+      },
+
+      "1984": {
+        title: "1984",
+        author: "George Orwell",
+        category: "Classic",
+        year: "1949",
+        pages: "328",
+        rating: "(4.6) · Reader favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg",
+        description: "A classic dystopian novel about surveillance, propaganda, language, and the abuse of political power.",
+        about: "1984 depicts a society in which a powerful government attempts to control information and individual thought. It raises questions about truth, freedom, surveillance, and authority.",
+        preview: "Welcome to your reading preview!\n\nIn a society shaped by constant surveillance, even ordinary actions can become matters of public control.\n\nThe story asks what happens when people cannot freely examine information or question the claims made by those in power."
+      },
+
+      "the-hobbit": {
+        title: "The Hobbit",
+        author: "J.R.R. Tolkien",
+        category: "Fantasy",
+        year: "1937",
+        pages: "310",
+        rating: "(4.8) · Reader favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg",
+        description: "A fantasy adventure following Bilbo Baggins on an unexpected journey with a group of dwarves.",
+        about: "Bilbo Baggins leaves the comfort of home to join an expedition involving dwarves, a dangerous journey, and a dragon guarding treasure. The story explores courage, friendship, and personal growth.",
+        preview: "Welcome to your reading preview!\n\nBilbo Baggins prefers the comforts of home and has little interest in unexpected adventures.\n\nHowever, an unusual visit introduces the possibility of a journey far beyond his familiar surroundings."
+      },
+
+      "clean-code": {
+        title: "Clean Code",
+        author: "Robert C. Martin",
+        category: "Programming",
+        year: "2008",
+        pages: "464",
+        rating: "(4.5) · Programmer favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg",
+        description: "A software development book about writing code that is easier to understand, maintain, and improve.",
+        about: "Clean Code discusses naming, functions, error handling, testing, and code organization. Its examples encourage programmers to think about readability and maintainability.",
+        preview: "Welcome to your reading preview!\n\nCode is read and maintained by people as well as executed by computers.\n\nClear names, focused functions, and consistent organization can make a project easier for another developer to understand."
+      },
+
+      "the-martian": {
+        title: "The Martian",
+        author: "Andy Weir",
+        category: "Science Fiction",
+        year: "2011",
+        pages: "369",
+        rating: "(4.7) · Reader favorite",
+        cover: "https://covers.openlibrary.org/b/isbn/9780553418026-L.jpg",
+        description: "A science-fiction survival story about an astronaut stranded on Mars who must solve practical problems.",
+        about: "The Martian follows astronaut Mark Watney as he uses scientific reasoning, engineering, and careful planning to survive on Mars and seek a way home.",
+        preview: "Welcome to your reading preview!\n\nSurvival in an unfamiliar environment depends on observing the situation carefully and working with the resources available.\n\nSmall calculations, practical experiments, and systematic problem-solving can become essential when every resource matters."
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const bookId = params.get("id") || "atomic-habits";
+    const book = books[bookId];
+
+    const reader = document.getElementById("reader");
+
+    if (book) {
+      document.title = book.title + " | Book Haven";
+
+      document.getElementById("bookTitle").textContent = book.title;
+      document.getElementById("bookAuthor").textContent = book.author;
+      document.getElementById("bookCategory").textContent = book.category;
+      document.getElementById("bookRating").textContent = book.rating;
+      document.getElementById("bookDescription").textContent = book.description;
+      document.getElementById("detailAuthor").textContent = book.author;
+      document.getElementById("bookYear").textContent = book.year;
+      document.getElementById("bookPages").textContent = book.pages;
+      document.getElementById("bookAbout").textContent = book.about;
+      document.getElementById("readerTitle").textContent = book.title + " — Reading Preview";
+      document.getElementById("readerText").textContent = book.preview;
+
+      const cover = document.getElementById("bookCover");
+      cover.src = book.cover;
+      cover.alt = "Cover of " + book.title;
+
+      cover.onerror = function () {
+        this.onerror = null;
+        this.src = "https://placehold.co/300x440/e8edf2/172033?text=Book+Haven";
+      };
+    } else {
+      document.getElementById("bookTitle").textContent = "Book Not Found";
+      document.getElementById("bookDescription").textContent =
+        "We couldn't find this book. Return to the Books page and select a book.";
+      document.getElementById("bookAbout").textContent =
+        "Please choose a book from the Book Haven collection.";
+      document.getElementById("bookCover").src =
+        "https://placehold.co/300x440/e8edf2/172033?text=Book+Not+Found";
+      document.getElementById("readMoreBtn").disabled = true;
+    }
+
+    document.getElementById("readMoreBtn").addEventListener("click", function () {
+      if (!book) return;
+
+      reader.classList.add("active");
+      reader.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.getElementById("closeReaderBtn").addEventListener("click", function () {
+      reader.classList.remove("active");
+    });
+
+    document.getElementById("wishlistBtn").addEventListener("click", function () {
+      if (!book) return;
+
+      let wishlist = [];
+
+      try {
+        wishlist = JSON.parse(localStorage.getItem("bookHavenWishlist")) || [];
+      } catch (error) {
+        wishlist = [];
+      }
+
+      const existingIndex = wishlist.findIndex(item => item.id === bookId);
+
+      if (existingIndex !== -1) {
+        wishlist.splice(existingIndex, 1);
+        localStorage.setItem("bookHavenWishlist", JSON.stringify(wishlist));
+        this.textContent = "♡ Wishlist";
+      } else {
+        wishlist.push({
+          id: bookId,
+          title: book.title,
+          author: book.author
+        });
+        localStorage.setItem("bookHavenWishlist", JSON.stringify(wishlist));
+        this.textContent = "♥ Added to Wishlist";
+      }
+    });
+  </script>
+</body>
+</html>
